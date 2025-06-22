@@ -1,0 +1,31 @@
+// See https://containers.dev/implementors/json_reference/ for configuration reference
+{
+  "name": "cs-course-tools",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "USER_ID": "${localEnv:DEV_CONTAINER_USER_ID}",
+      "GROUP_ID": "${localEnv:DEV_CONTAINER_GROUP_ID}"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mutantdino.resourcemonitor",
+        "Vue.volar"
+      ],
+      "settings": {
+        "[vue]": {
+          "editor.formatOnSave": true,
+          "editor.tabSize": 2,
+          "editor.defaultFormatter": "Vue.volar"
+        },
+        "[typescript]": {
+          "editor.formatOnSave": true,
+          "editor.tabSize": 2
+        }
+      }
+    }
+  },
+  "remoteUser": "lovely"
+}

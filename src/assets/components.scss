@@ -1,0 +1,99 @@
+
+
+a {
+  text-decoration: none;
+  color: var(--lm-c-green);
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+@mixin logo-size($scale) {
+  height: 80px * $scale;
+  width: 80px * $scale;
+}
+
+.logo {
+  background: var(--logo-url);
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  @include logo-size(.75);
+
+  &.logo-lg {
+      @include logo-size(1.5);
+  }
+
+  
+  &.logo-sm {
+      @include logo-size(.75);
+  }
+}
+
+// App
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+}
+
+// Routing / navigation
+
+header {
+  line-height: 1.5;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  border-bottom: 1px var(--color-border) solid;
+}
+
+nav a.router-link-active {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+
+nav a.router-link-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+@media (min-width: 1024px) {
+  header {
+    flex-direction: row;
+  }
+
+  nav {
+    text-align: left;
+    margin-left: -1rem;
+    font-size: 1rem;
+
+    padding: 1rem 0;
+  }
+}
+
+/* TODO */
+// Tables 
+table.stripy > tbody > tr:nth-child(even) {
+  background-color: var(--tertiary-color);
+}
+
+table.stripy tbody > tr:hover {
+  background-color: var(--secondary-color);
+}

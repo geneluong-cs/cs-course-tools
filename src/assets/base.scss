@@ -1,0 +1,94 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+
+  // Primary
+
+  --lm-c-green:            #2EAE00;
+  --lm-c-limestone:        #EFEDE7;
+
+  // Secondary
+
+  --lm-c-peacock:          #0D2D31;
+  --lm-c-dust-purple:      #413E61;
+  --lm-c-violet:           #695BAE;
+  --lm-c-rock:             #B6A8A0;
+  --lm-c-slate:            #757171;
+  --lm-c-tangerine:        #F06449;
+
+  // Tertiary
+
+  --lm-c-midnight:         #006C7D;
+  --lm-c-sunshine:         #FFC15E;
+  --lm-c-spring:           #ABE188;
+  --lm-c-olive-green:      #515A47;
+  --lm-c-icy-blue:         #A3D9FF;
+
+  // Vue
+
+  --vt-c-white: var(--lm-c-limestone);
+
+  --vt-c-black: var(--lm-c-peacock);
+
+  --vt-c-indigo: var(--lm-c-dust-purple);
+
+  --vt-c-divider-light-1: var(--lm-c-slate);
+  --vt-c-divider-light-2: var(--lm-c-rock);
+  --vt-c-divider-dark-1: var(--lm-c-sunshine);
+  --vt-c-divider-dark-2: var(--lm-c-spring);
+
+  --vt-c-text-light-1: var(--vt-c-indigo);
+  --vt-c-text-light-2: var(--lm-c-tangerine);
+  --vt-c-text-dark-1: var(--vt-c-white);
+  --vt-c-text-dark-2: var(--lm-c-icy-blue);
+
+  // App
+
+  --logo-light: url('/src/assets/cs-light-logo.svg');
+  --logo-dark: url('/src/assets/cs-dark-logo.svg');
+}
+
+/* semantic color variables for this project */
+:root {
+  --color-background: var(--vt-c-white);
+
+  --color-border: var(--vt-c-divider-light-2);
+  --color-border-hover: var(--vt-c-divider-light-1);
+
+  --color-heading: var(--vt-c-text-light-1);
+  --color-text: var(--vt-c-text-light-1);
+
+  --section-gap: 160px;
+
+  --primary-color: var(--lm-c-green);
+  --secondary-color: var(--lm-c-tangerine);
+  --tertiary-color: var(--lm-c-midnight);
+
+  --logo-url: var(--logo-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--vt-c-black);
+
+    --color-border: var(--vt-c-divider-dark-2);
+    --color-border-hover: var(--vt-c-divider-dark-1);
+
+    --color-heading: var(--vt-c-text-dark-1);
+    --color-text: var(--vt-c-text-dark-2);
+
+    --primary-color: var(--lm-c-violet);
+    --secondary-color: var(--lm-c-rock);
+    --tertiary-color: var(--lm-c-olive-green);
+
+    --logo-url: var(--logo-dark);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  font-weight: normal;
+}
