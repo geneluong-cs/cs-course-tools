@@ -30,38 +30,6 @@ const router = createRouter({
           component: () => import('@/views/ParticipantFinderView.vue')
         },
         {
-          path: getRouteName('zoom-apps'),
-          name: getRouteName('zoom-apps'),
-          meta: {
-            description: 'Zoom Apps',
-            order: 30,
-          },
-          component: () => import('@/views/ZoomApps.vue'),
-          redirect: { name: getRouteName('zoom-apps-logs') },
-          children: [
-            {
-              path: getRouteName('zoom-apps-logs'),
-              name: getRouteName('zoom-apps-logs'),
-              component: () => import('@/components/zoomapps/ZoomAppLogs/ZoomAppLogs.vue'),
-            },
-            {
-              path: getRouteName('zoom-apps-report-status'),
-              name: getRouteName('zoom-apps-report-status'),
-              component: () => import('@/components/zoomapps/ReportStatus/ReportStatus.vue'),
-            },
-            {
-              path: getRouteName('zoom-apps-random-breakout-room-management'),
-              name: getRouteName('zoom-apps-random-breakout-room-management'),
-              component: () => import('@/components/zoomapps/RandomBreakoutRoomManagement/RandomBreakoutRoomManagement.vue'),
-            },
-            {
-              path: getRouteName('zoom-apps-group-breakout-room-management'),
-              name: getRouteName('zoom-apps-group-breakout-room-management'),
-              component: () => import('@/components/zoomapps/GroupBreakoutRoomManagement/GroupBreakoutRoomManagement.vue'),
-            },
-          ]
-        },
-        {
           path: getRouteName('zoom-fleet'),
           name: getRouteName('zoom-fleet'),
           meta: {
