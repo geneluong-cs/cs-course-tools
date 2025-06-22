@@ -1,4 +1,4 @@
-FROM node:18.20.1-bullseye
+FROM node:24.2.0-bullseye
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
