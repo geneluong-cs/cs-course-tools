@@ -5,6 +5,7 @@ const routeNames = [
   'tool-box',
   'bubble-map',
   'group-assigner',
+  'countdown-timer',
   'preparation-tools',
   'preparation-tool-selection',
   'list-of-list',
