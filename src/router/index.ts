@@ -71,6 +71,11 @@ const router = createRouter({
       path: '/' + getRouteName('zoom-meeting'),
       name: getRouteName('zoom-meeting'),
       component: () => import('@/ZoomMeetingApp.vue'),
+    },
+    {
+      path: '/' + getRouteName('countdown-render'),
+      name: getRouteName('countdown-render'),
+      component: () => import('@/CountdownRender.vue'),
     }
   ]
 });
