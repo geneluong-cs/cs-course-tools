@@ -105,13 +105,13 @@ function generateLink(): void {
 </script>
 
 <template>
-  <p v-if="errors.length">
+  <div v-if="errors.length">
   <h2>Errors</h2>
   <b>Please correct the following error(s):</b>
-  </p>
   <ul>
     <li v-for="error in errors">{{ error }}</li>
   </ul>
+  </div>
   <br />
   <h2>Message</h2>
   <div>
