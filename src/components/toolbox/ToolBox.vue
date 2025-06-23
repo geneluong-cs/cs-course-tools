@@ -7,7 +7,7 @@ import { getRouteName } from '@/router/RouterNames';
     <nav>
       <RouterLink v-bind:to="getRouteName('bubble-map')">Bubble Map</RouterLink>
       <RouterLink v-bind:to="getRouteName('group-assigner')">Group Assigner</RouterLink>
-      <RouterLink v-bind:to="getRouteName('countdown-timer')">Countdown Timer</RouterLink>
+      <RouterLink v-bind:to="getRouteName('countdown-setup')">Countdown Setup</RouterLink>
     </nav>
   </header>
   <Suspense>

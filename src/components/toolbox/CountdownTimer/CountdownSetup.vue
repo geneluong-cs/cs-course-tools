@@ -1,17 +1,19 @@
 <script setup lang="ts">
+import { getRouteName } from '@/router/RouterNames';
 import { DateTime } from 'luxon';
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
+const router = useRouter();
 
 const errors = ref<string[]>([]);
 
-const messages = ref<string[]>([]);
+const messages = ref<string[]>(['']);
 const hours = ref('');
 const minutes = ref('');
 const timeZones = ref<string[]>([]);
-const link = ref('');
+const countdownRender = ref('');
 
 const messageData = route.query['message'];
 const timezoneData = route.query['timezone'];
@@ -71,9 +73,34 @@ function generateLink(): void {
     errors.value.push('minute value must be numerical');
   }
 
+  const nonEmptyTimeZones = timeZones.value.filter(x => x !== '');
+  if (nonEmptyTimeZones.length === 0) {
+    errors.value.push('A least one time zone needs to be filled in')
+  }
+
   if (errors.value.length > 0) {
     return;
   }
+
+  router.replace({
+    name: getRouteName('countdown-setup'),
+    query: {
+      message: nonEmptyMessages,
+      timezone: nonEmptyTimeZones,
+      hours: numHours,
+      minutes: numMinutes,
+    }
+  });
+
+  countdownRender.value = router.resolve({
+    name: getRouteName('countdown-render'),
+    query: {
+      message: nonEmptyMessages,
+      timezone: nonEmptyTimeZones,
+      hours: numHours,
+      minutes: numMinutes,
+    }
+  }).href;
 }
 </script>
 
@@ -109,6 +136,7 @@ function generateLink(): void {
     </div>
   </div>
   <button @click="generateLink()">Generate link</button>
+  <a v-if="countdownRender" :href="countdownRender">Countdown render</a>
 </template>
 
 <style scoped>

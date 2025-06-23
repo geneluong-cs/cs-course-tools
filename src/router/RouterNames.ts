@@ -1,12 +1,13 @@
 const routeNames = [
   'root',
+  'dashboard',
 
   'participant-finder',
 
   'tool-box',
   'bubble-map',
   'group-assigner',
-  'countdown-timer',
+  'countdown-setup',
 
   'zoom-meeting',
 

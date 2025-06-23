@@ -59,9 +59,9 @@ const router = createRouter({
               component: () => import('@/components/toolbox/GroupAssigner/GroupAssigner.vue'),
             },
             {
-              path: getRouteName('countdown-timer'),
-              name: getRouteName('countdown-timer'),
-              component: () => import('@/components/toolbox/CountdownTimer/CountdownTimer.vue'),
+              path: getRouteName('countdown-setup'),
+              name: getRouteName('countdown-setup'),
+              component: () => import('@/components/toolbox/CountdownTimer/CountdownSetup.vue'),
             },
           ]
         },
