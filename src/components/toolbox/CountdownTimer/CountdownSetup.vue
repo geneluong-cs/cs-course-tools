@@ -12,6 +12,7 @@ const errors = ref<string[]>([]);
 const messages = ref<string[]>(['']);
 const hours = ref('');
 const minutes = ref('');
+const jitter = ref('');
 const timeZones = ref<string[]>([]);
 const countdownRender = ref('');
 
@@ -19,6 +20,7 @@ const messageData = route.query['message'];
 const timezoneData = route.query['timezone'];
 const hoursData = route.query['hours'];
 const minuteData = route.query['minutes'];
+const jitterData = route.query['jitter'];
 
 if (typeof (messageData) === 'string') {
   messages.value = [messageData];
@@ -31,6 +33,11 @@ if (typeof (hoursData) === 'string') {
 }
 if (typeof (minuteData) === 'string') {
   minutes.value = minuteData;
+}
+if (typeof (jitterData) === 'string') {
+  jitter.value = jitterData;
+} else {
+  jitter.value = '-500';
 }
 
 if (typeof (timezoneData) === 'string') {
@@ -50,6 +57,7 @@ function generateLink(): void {
   }
 
   const numReg = /^\d+$/;
+  const anyNumReg = /^-?\d+$/;
 
   let numHours = 0
   if (numReg.test(hours.value)) {
@@ -73,6 +81,13 @@ function generateLink(): void {
     errors.value.push('minute value must be numerical');
   }
 
+  let numJitter = 0
+  if (anyNumReg.test(jitter.value)) {
+    numJitter = parseInt(jitter.value);
+  } else {
+    errors.value.push('jitter value must be numerical');
+  }
+
   const nonEmptyTimeZones = timeZones.value.filter(x => x !== '');
   if (nonEmptyTimeZones.length === 0) {
     errors.value.push('A least one time zone needs to be filled in')
@@ -89,6 +104,7 @@ function generateLink(): void {
       timezone: nonEmptyTimeZones,
       hours: numHours,
       minutes: numMinutes,
+      jitter: numJitter,
     },
     hash: `#${Date.now().toString()}`,
   });
@@ -100,6 +116,7 @@ function generateLink(): void {
       timezone: nonEmptyTimeZones,
       hours: numHours,
       minutes: numMinutes,
+      jitter: numJitter,
     }
   }).href;
 }
@@ -138,6 +155,8 @@ function generateLink(): void {
   <div>
     <label>Hours</label>:<input v-model="hours" placeholder="Hour of day to end timer, use 24hour time" />
     <label>Minutes</label>:<input v-model="minutes" placeholder="Mintues to end timer" />
+    <label>Jitter (milliseconds)</label>:<input v-model="jitter"
+      placeholder="How long in to adjust the countdown timer" />
   </div>
   <button @click="generateLink()">Generate link</button>
   <a v-if="countdownRender" class="countdown" :href="countdownRender">Start countdown</a>
