@@ -10,6 +10,7 @@ const messages = new Array<string>();
 let numHours = 0;
 let numMinutes = 0;
 const timeZones = new Array<string>();
+let numJitter = 0;
 
 const countdownDuration = ref<Duration<boolean>>(Duration.fromObject({}));
 const timeLeft = computed(() => countdownDuration.value.toFormat('hh:mm:ss'));
@@ -18,6 +19,7 @@ const messageData = route.query['message'];
 const timezoneData = route.query['timezone'];
 const hoursData = route.query['hours'];
 const minuteData = route.query['minutes'];
+const jitterData = route.query['jitter'];
 
 if (typeof (messageData) === 'string') {
   messages.push(messageData);
@@ -28,6 +30,7 @@ if (typeof (messageData) === 'string') {
 }
 
 const numReg = /^\d+$/;
+const anyNumReg = /^-?\d+$/;
 
 if (typeof (hoursData) === 'string') {
   if (numReg.test(hoursData)) {
@@ -61,17 +64,28 @@ if (typeof (timezoneData) === 'string') {
   timeZones.push(DateTime.now().zoneName);
 }
 
+if (typeof (jitterData) === 'string') {
+  if (anyNumReg.test(jitterData)) {
+    numJitter = parseInt(jitterData);
+  } else {
+    errors.push('jitter value must be numerical');
+  }
+}
+
 const start = DateTime.now().setZone(timeZones[0]);
 
 const targetDate = start.set({
   hour: numHours,
   minute: numMinutes,
-  second: 0
-}).plus({ day: numHours < start.hour ? 1 : 0 })
+  second: 0,
+  millisecond: 0,
+}).plus({ day: numHours < start.hour ? 1 : 0 });
+
+const targetDateAdjusted = targetDate.plus({ millisecond: numJitter });
 
 function updateCountdown(): void {
   const now = DateTime.local().setZone(timeZones[0]);
-  const diff = targetDate.diff(now);
+  const diff = targetDateAdjusted.diff(now);
   countdownDuration.value = diff;
 
   if (diff.milliseconds < 0) {
