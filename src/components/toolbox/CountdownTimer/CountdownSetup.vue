@@ -149,4 +149,10 @@ textarea {
   margin-right: 20px;
   width: 20%;
 }
+
+.countdown {
+  margin: 20px auto 0 auto;
+  border: 1px solid black;
+  padding: 20px;
+}
 </style>
