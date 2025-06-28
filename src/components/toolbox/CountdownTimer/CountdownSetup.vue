@@ -123,12 +123,10 @@ function generateLink(): void {
       <button @click="messages.splice(idx, 1)">Remove</button>
     </div>
   </div>
-  <h2>Timer</h2>
+  <h2>Time Zones</h2>
   <div>
     <button @click="timeZones.push('')">Add time zone</button>
     <br />
-    <label>Hours</label>:<input v-model="hours" placeholder="Hour of day to end timer, use 24hour time" />
-    <label>Minutes</label>:<input v-model="minutes" placeholder="Mintues to end timer" />
     <div v-for="(m, idx) in timeZones">
       <select v-model="timeZones[idx]">
         <option v-for="tz of Intl.supportedValuesOf('timeZone')" :value="tz">{{ tz }}</option>
@@ -136,8 +134,13 @@ function generateLink(): void {
       <button @click="timeZones.splice(idx, 1)">Remove</button>
     </div>
   </div>
+  <h2>Time to end (based on first timezone)</h2>
+  <div>
+    <label>Hours</label>:<input v-model="hours" placeholder="Hour of day to end timer, use 24hour time" />
+    <label>Minutes</label>:<input v-model="minutes" placeholder="Mintues to end timer" />
+  </div>
   <button @click="generateLink()">Generate link</button>
-  <a v-if="countdownRender" :href="countdownRender">Countdown render</a>
+  <a v-if="countdownRender" class="countdown" :href="countdownRender">Start countdown</a>
 </template>
 
 <style scoped>
