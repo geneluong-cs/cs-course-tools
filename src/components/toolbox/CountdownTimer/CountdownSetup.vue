@@ -89,7 +89,8 @@ function generateLink(): void {
       timezone: nonEmptyTimeZones,
       hours: numHours,
       minutes: numMinutes,
-    }
+    },
+    hash: `#${Date.now().toString()}`,
   });
 
   countdownRender.value = router.resolve({
@@ -106,11 +107,11 @@ function generateLink(): void {
 
 <template>
   <div v-if="errors.length">
-  <h2>Errors</h2>
-  <b>Please correct the following error(s):</b>
-  <ul>
-    <li v-for="error in errors">{{ error }}</li>
-  </ul>
+    <h2>Errors</h2>
+    <b>Please correct the following error(s):</b>
+    <ul>
+      <li v-for="error in errors">{{ error }}</li>
+    </ul>
   </div>
   <br />
   <h2>Message</h2>
