@@ -73,9 +73,13 @@ function updateCountdown(): void {
   const now = DateTime.local().setZone(timeZones[0]);
   const diff = targetDate.diff(now);
   countdownDuration.value = diff;
+
+  if (diff.milliseconds < 0) {
+    clearInterval(countdownInterval);
+  }
 }
 
-setInterval(updateCountdown, 1000);
+const countdownInterval = setInterval(updateCountdown, 1000);
 
 </script>
 
@@ -95,7 +99,7 @@ setInterval(updateCountdown, 1000);
         <div>{{ targetDate.setZone(tz).toFormat('hh:mm:ss') }}</div>
       </div>
     </div>
-    <div class="timer">{{ timeLeft }}</div>
+    <div class="timer" v-if="countdownDuration.milliseconds > 0">{{ timeLeft }}</div>
   </template>
 </template>
 
