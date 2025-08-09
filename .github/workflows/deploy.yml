@@ -21,6 +21,11 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       with:
         path: dist/
+    - name: Build & Deploy Worker
+      uses: cloudflare/wrangler-action@v3
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
   deploy:
     needs: build

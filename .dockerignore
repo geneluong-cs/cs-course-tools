@@ -31,3 +31,4 @@ coverage
 # Additions
 
 README.md
+.wrangler/
