@@ -101,7 +101,7 @@ const countdownInterval = setInterval(updateCountdown, 1000);
   <template v-if="errors.length > 0">
     <div v-for="e of errors">{{ e }}</div>
   </template>
-  <template v-else>
+  <div class="container" v-else>
     <div class="message-container">
       <div class="message" v-for="m of messages">
         {{ m }}
@@ -114,30 +114,29 @@ const countdownInterval = setInterval(updateCountdown, 1000);
       </div>
     </div>
     <div class="timer" v-if="countdownDuration.milliseconds > 0">{{ timeLeft }}</div>
-  </template>
+  </div>
 </template>
 
-<style>
-.body {
-  min-height: 100vh;
-}
-</style>
 <style scoped>
-.message-container {
-  width: 100%;
+.container {
+  height: 100%;
 
+  display: grid;
+  grid-template-rows: 80% 10% 10%;
+
+  text-align: center;
+}
+
+.message-container {
   display: flex;
   justify-content: space-between;
-
-  border-bottom: 2px solid black;
+  flex-wrap: wrap;
 }
 
 .message {
-  font-size: 5em;
-  /* border: 2px solid black; */
+  font-size: 4em;
+  border: 2px solid black;
   padding: 20px;
-
-  text-align: center;
 
   flex-grow: 1;
 
@@ -147,20 +146,14 @@ const countdownInterval = setInterval(updateCountdown, 1000);
 .time-zones {
   display: flex;
   justify-content: space-evenly;
-
-  text-align: center;
-
-  font-size: 3em;
+  align-items: center;
+  font-size: 2em;
 
   border-bottom: 2px solid black;
 }
 
 .timer {
-  width: 100%;
-
-  text-align: center;
-
   font-weight: bold;
-  font-size: 8em;
+  font-size: 6em;
 }
 </style>
