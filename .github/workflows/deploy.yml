@@ -52,6 +52,7 @@ jobs:
         node-version: 24
         cache: npm
     - run: npm install
+    - run: IS_WRANGLER=TRUE npm run build
     - name: Build & Deploy Worker
       uses: cloudflare/wrangler-action@v3
       with:
