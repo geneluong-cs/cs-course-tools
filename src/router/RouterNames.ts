@@ -4,6 +4,12 @@ const routeNames = [
 
   'participant-finder',
 
+  'zoom-apps',
+  'zoom-apps-random-breakout-room-management',
+  'zoom-apps-group-breakout-room-management',
+  'zoom-apps-logs',
+  'zoom-apps-report-status',
+
   'tool-box',
   'bubble-map',
   'group-assigner',
