@@ -6,12 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
-    "preview": "vite preview",
+    "preview": "npm run build && wrangler dev",
     "test:unit": "vitest",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "deploy": "npm run build && wrangler deploy",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@zoom/meetingsdk": "^4.0.0",
@@ -26,6 +28,7 @@
     "vue-search-select": "^3.2.0"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.11.2",
     "@rushstack/eslint-patch": "^1.12.0",
     "@tsconfig/node24": "^24.0.1",
     "@types/jsdom": "^21.1.7",
@@ -49,6 +52,7 @@
     "typescript-eslint": "^8.38.0",
     "vite": "^7.0.6",
     "vitest": "^3.2.4",
-    "vue-tsc": "^3.0.5"
+    "vue-tsc": "^3.0.5",
+    "wrangler": "^4.28.1"
   }
 }
