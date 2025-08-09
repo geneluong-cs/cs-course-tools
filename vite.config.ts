@@ -24,6 +24,8 @@ export default defineConfig(({ command }) => {
     define: {
       APP_VERSION: JSON.stringify(process.env.npm_package_version),
     },
-    base: process.env.NODE_ENV === 'production' ? '/cs-course-tools' : '/'
+    base: process.env.NODE_ENV === 'production'
+      ? process.env.IS_WRANGLER === 'TRUE' ? '/' : '/cs-course-tools'
+      : '/'
   }
 })

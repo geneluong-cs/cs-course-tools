@@ -27,7 +27,7 @@ coverage
 *.sln
 *.sw?
 
-
 # App
 
 src/services/debugdata.ts
+.wrangler/
