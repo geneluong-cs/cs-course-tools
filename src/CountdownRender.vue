@@ -110,7 +110,7 @@ const countdownInterval = setInterval(updateCountdown, 1000);
     <div class="time-zones">
       <div v-for="tz of timeZones">
         <div>{{ tz }}</div>
-        <div>{{ targetDate.setZone(tz).toFormat('hh:mm:ss') }}</div>
+        <div>{{ targetDate.setZone(tz).toFormat('HH:mm:ss') }}</div>
       </div>
     </div>
     <div class="timer" v-if="countdownDuration.milliseconds > 0">{{ timeLeft }}</div>
