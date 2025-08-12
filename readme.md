@@ -80,6 +80,28 @@ Note: for firefox you need to increase setting for CSP headers to come through (
 
 https://developers.zoom.us/docs/meeting-sdk/get-credentials/
 
+## Enable developer tools in the app
+
+On Windows:
+Add the following to the zoom.us.ini file. This file is located in the `%appdata%/Zoom/data` directory.
+
+```
+[ZoomChat]
+webview.context.menu=true
+```
+
+On Mac, run the command in a terminal
+```shell
+defaults write ZoomChat webview.context.menu true
+```
+
+> defaults is a command on macOS that will change the user preferences. The user preferences for Zoom are stored in the file ~/Library/Preferences/ZoomChat.plist, which is a binary plist, so it needs a plist editor like Xcode to open it. Therefore it’s easier to use a command line to read and write to that plist. There is a key in the plist called webview.context.menu which is a boolean value.
+
+- https://developers.zoom.us/docs/zoom-apps/create/
+- https://devforum.zoom.us/t/how-to-use-developer-console-in-zoom-internal-web-client/79379/4
+
+
+
 # TODO
 
 ## Code
