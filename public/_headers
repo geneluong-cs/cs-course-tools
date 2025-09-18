@@ -1,5 +1,5 @@
 # https://developers.cloudflare.com/pages/configuration/headers/
-
+/*
   X-Robots-Tag: noindex
 
   X-Content-Type-Options: nosniff;
