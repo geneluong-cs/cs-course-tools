@@ -1,10 +1,10 @@
 # https://developers.cloudflare.com/pages/configuration/headers/
-/*
+
   X-Robots-Tag: noindex
 
-  X-Content-Type-Options: "nosniff";
-  Strict-Transport-Security: "max-age=63072000; includeSubDomains; preload";
-  Referrer-Policy: "same-origin";
+  X-Content-Type-Options: nosniff;
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload;
+  Referrer-Policy: same-origin;
 
   # https://rwcsyd.syd.zoom.us/wc/ping/
   # https://rwcmel.mel.zoom.us/wc/ping/
@@ -15,8 +15,8 @@
   # https://rwcny.ny.zoom.us/wc/ping/
   # https://rwciad2.iad.zoom.us/wc/ping/
   #  wss://*.syd.zoom.us/wc/ (/api and /media)
-  Content-Security-Policy: "connect-src 'self' https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json https://gist.githubusercontent.com/geneluong-cs/ https://source.zoom.us/ https://zoom.us/wc/ https://log-external-gateway.zoom.us/meeting-external https://rwcsyd.syd.zoom.us/wc/ping/ https://rwcmel.mel.zoom.us/wc/ping/ https://rwcsg.cloud.zoom.us/wc/ping/ https://rwcsc.sc.zoom.us/wc/ping/ https://rwcsjc2.sjc.zoom.us/wc/ping/ https://rwcdv.dv.zoom.us/wc/ping/ https://rwcny.ny.zoom.us/wc/ping/ https://rwciad2.iad.zoom.us/wc/ping/ wss://*.syd.zoom.us/wc/ wss://*.mel.zoom.us/wc/ wss://*.cloud.zoom.us/wc/ wss://*.sc.zoom.us/wc/ wss://*.sjc.zoom.us/wc/ wss://*.dv.zoom.us/wc/ wss://*.ny.zoom.us/wc/ wss://*.iad.zoom.us/wc/";
+  Content-Security-Policy: connect-src 'self' https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json https://gist.githubusercontent.com/geneluong-cs/ https://source.zoom.us/ https://zoom.us/wc/ https://log-external-gateway.zoom.us/meeting-external https://rwcsyd.syd.zoom.us/wc/ping/ https://rwcmel.mel.zoom.us/wc/ping/ https://rwcsg.cloud.zoom.us/wc/ping/ https://rwcsc.sc.zoom.us/wc/ping/ https://rwcsjc2.sjc.zoom.us/wc/ping/ https://rwcdv.dv.zoom.us/wc/ping/ https://rwcny.ny.zoom.us/wc/ping/ https://rwciad2.iad.zoom.us/wc/ping/ wss://*.syd.zoom.us/wc/ wss://*.mel.zoom.us/wc/ wss://*.cloud.zoom.us/wc/ wss://*.sc.zoom.us/wc/ wss://*.sjc.zoom.us/wc/ wss://*.dv.zoom.us/wc/ wss://*.ny.zoom.us/wc/ wss://*.iad.zoom.us/wc/;
 
   # Disable dark reader browser add on, it counts as another script source
-  Content-Security-Policy: "script-src-elem 'self' https://zoom.us/api/v1/wc/info https://source.zoom.us";
-  Content-Security-Policy: "style-src 'self' 'unsafe-inline'";
+  Content-Security-Policy: script-src-elem 'self' https://zoom.us/api/v1/wc/info https://source.zoom.us;
+  Content-Security-Policy: style-src 'self' 'unsafe-inline';
