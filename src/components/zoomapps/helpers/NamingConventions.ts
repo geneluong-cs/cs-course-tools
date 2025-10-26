@@ -44,9 +44,9 @@ export function getNames(screenName: string): [string, string | null] {
   const splits = secondWord.split('/');
   switch (splits.length) {
     case 1:
-      return [splits[0].trim(), null];
+      return [(splits[0] as string).trim(), null];
     case 2:
-      return [splits[0].trim(), splits[1].trim()];
+      return [(splits[0] as string).trim(), (splits[1] as string).trim()];
     default:
       return [secondWord, null];
   }

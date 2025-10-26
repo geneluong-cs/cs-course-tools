@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import zoomSdk, { type OnParticipantChangeParticipantType } from '@zoom/appssdk';
+import zoomSdk, { type OnParticipantChangeParticipantType, type Participant } from '@zoom/appssdk';
 import { computed, ref, watch, type ComputedRef } from 'vue';
 import { getRouteName } from '@/router/RouterNames';
 import type { InformationLog } from './helpers/InformationLog';
@@ -53,7 +53,7 @@ async function calculateClassStatus(classConfig: ClassConfig[]): Promise<ClassSt
     const grouped = groupBy(response.participants, 'screenName');
 
     const groupedKeys = Object.keys(grouped);
-    const duplicatedScreenNames = groupedKeys.filter(x => grouped[x].length > 1);
+    const duplicatedScreenNames = groupedKeys.filter(x => (grouped[x] as Participant[]).length > 1);
 
     duplicatedScreenNames.forEach(x => addError(`Duplicate screen name found '${x}'. Tracking may not work properly`));
   }
@@ -67,7 +67,7 @@ async function calculateClassStatus(classConfig: ClassConfig[]): Promise<ClassSt
       potentialNames: cc.potentialNames,
       group: cc.group,
       here: foundInMeeting.length > 0,
-      participantUuid: foundInMeeting.length > 0 ? meetingParticipantLookup.get(foundInMeeting[0]) : undefined,
+      participantUuid: foundInMeeting.length > 0 ? meetingParticipantLookup.get(foundInMeeting[0] as string) : undefined,
     };
 
     if (foundInMeeting.length > 1) {

@@ -86,8 +86,8 @@ export function assignGroups(participants: IParticipant[], maxNumbers: number): 
     // Group by the group index
     const attributesSuggestionsGrouped = groupBy(groupSuggestions, 'num');
     // Find the groups with the largest concensus
-    const mostGroupMatches = Object.keys(attributesSuggestionsGrouped).reduce((prev, attr) => Math.max(attributesSuggestionsGrouped[attr].length, prev), -1);
-    const candidateGroups = Object.keys(attributesSuggestionsGrouped).filter(attr => attributesSuggestionsGrouped[attr].length === mostGroupMatches).map(x => parseInt(x));
+    const mostGroupMatches = Object.keys(attributesSuggestionsGrouped).reduce((prev, attr) => Math.max((attributesSuggestionsGrouped[attr] || []).length, prev), -1);
+    const candidateGroups = Object.keys(attributesSuggestionsGrouped).filter(attr => (attributesSuggestionsGrouped[attr] || []).length === mostGroupMatches).map(x => parseInt(x));
 
     if (candidateGroups.length > 0) {
       const filteredCandidates = groupResults.filter((val, index) => candidateGroups.includes(index));
@@ -107,12 +107,12 @@ export function assignGroups(participants: IParticipant[], maxNumbers: number): 
 function selectSmallestGroup(groupResults: IParticipant[][]): IParticipant[] {
   const groupMatches = groupResults.map((a, index) => [index, a.length]);
 
-  const min = groupMatches.reduce((prev, next) => Math.min(prev, next[1]), 99999);
+  const min = groupMatches.reduce((prev, next) => Math.min(prev, next[1] as number), 99999);
 
   const groupCandidates = groupMatches.filter(x => x[1] == min);
   // The group with the lowest index
-  groupCandidates.sort((l, r) => l[1] - r[1]);
-  return groupResults[groupCandidates[0][0]];
+  groupCandidates.sort((l, r) => (l[1] || 0) - (r[1] || 0));
+  return groupResults[(groupCandidates[0] || [])[0] || 0] || [];
 }
 
 export function getGroupSummary(participants: IParticipant[]): Map<string, number> {
@@ -129,7 +129,7 @@ export function getGroupSummary(participants: IParticipant[]): Map<string, numbe
     seed.sort();
     return fold((acc2, attr2) => {
       if (attr2 !== 'undefined' && attr2 !== '') {
-        acc2.set(`${attr}:${attr2}`, groupedAttributeValues[attr2].length);
+        acc2.set(`${attr}:${attr2}`, groupedAttributeValues[attr2]!.length);
       }
       return acc2;
     }, acc, seed)

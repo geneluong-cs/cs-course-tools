@@ -34,9 +34,9 @@ const participants = computed<IParticipant[]>(() => {
       return next === nameIndex || row[next] === '' ?
         prev :
         {
-          [headings[next]]: row[next],
+          [headings[next] as string]: row[next],
           ...prev
-        }
+        } as IParticipant
     }, {
       name: row[nameIndex]
     } as IParticipant)
