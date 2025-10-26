@@ -36,7 +36,7 @@ export function evenOutBreakoutRooms(response: BreakoutRoomsResponse, targetSize
 
       // Add to a room that can fit it
       if (firstRoomIndex >= 0) {
-        const firstRoom = runningRoomCounts[firstRoomIndex];
+        const firstRoom = runningRoomCounts[firstRoomIndex] as BorTracker;
 
         results.push({
           action: 'Add',
@@ -55,7 +55,7 @@ export function evenOutBreakoutRooms(response: BreakoutRoomsResponse, targetSize
       const firstRoomIndex = extraRooms.findIndex(x => x.count() < targetSize);
       // Add to extra room, these are rooms that have been explictly added
       if (firstRoomIndex >= 0) {
-        const firstRoom = extraRooms[firstRoomIndex];
+        const firstRoom = extraRooms[firstRoomIndex] as BorTracker;
 
         results.push({
           action: 'ExtraRoom',

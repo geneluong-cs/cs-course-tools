@@ -166,7 +166,7 @@ function applyBreakoutRoomChanges(changes: BreakoutRoomResolution[], breakoutRoo
       name: `New Room ${key}`
     }).then(uuid => {
       return Promise.all(
-        roomsToCreate[key].map(f => zoomSdk.assignParticipantToBreakoutRoom({
+        (roomsToCreate[key] as BreakoutRoomResolution[]).map(f => zoomSdk.assignParticipantToBreakoutRoom({
           participantUUID: f.participantUuid,
           uuid: uuid.uuid
         }))
@@ -243,7 +243,7 @@ const defaultConfig: BreakoutRoomConfig = {
 const config: Ref<BreakoutRoomConfig> = ref(defaultConfig);
 updateTimeSignals();
 
-const presetConfig = new Map(Object.keys(forumBreakoutTimes).flatMap(k => forumBreakoutTimes[k].map(conf => [`${k} page ${conf.page}`, conf])));
+const presetConfig = new Map(Object.keys(forumBreakoutTimes).flatMap(k => (forumBreakoutTimes[k] as BreakoutRoomConfig[]).map(conf => [`${k} page ${conf.page}`, conf])));
 </script>
 
 <template>

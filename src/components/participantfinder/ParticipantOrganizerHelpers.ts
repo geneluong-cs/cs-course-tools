@@ -11,25 +11,25 @@ export function nameToPerson(name: string): Person {
 // Internal
 export function convertPersonToNgram(person: Person, ngramLength: number): NgramPerson[] {
   return toWindows(person.normalizedName.split(''), ngramLength)   // [ 'a', 'b' ]
-  .map(x => x.reduce((y, z) => y + z))                      // 'ab'
-  .map(x => {
-    return {
-      ngram: x,
-      person: person
-    };
-  });
+    .map(x => x.reduce((y, z) => y + z))                      // 'ab'
+    .map(x => {
+      return {
+        ngram: x,
+        person: person
+      };
+    });
 }
 
 // Internal
 function allocatePeopleToNgramGroup(
   allNames: Person[],
-  groupedNgrams:[string, NgramPerson[]][],
+  groupedNgrams: [string, NgramPerson[]][],
   namesCountCutoff: number): ParsedNgramPerson[] {
 
   let namesLeft = allNames.slice();
 
   return groupedNgrams.map(x => {
-    const [ ngram, names ] = x;
+    const [ngram, names] = x;
 
     let namesLeftIndexes = names
       .map(x => namesLeft.findIndex(y => x.person.normalizedName === y.normalizedName))
@@ -65,14 +65,14 @@ export function groupPeopleToNgrams(
 
   const unsortedGroupedNgrams = groupBy(ngramToNames, 'ngram');
 
-  const groupedNgrams: [ string, NgramPerson[] ][] = Object.keys(unsortedGroupedNgrams)
-    .map(key => { 
-      let uniqueNames = distinct(unsortedGroupedNgrams[key], x => x.person.normalizedName);
+  const groupedNgrams: [string, NgramPerson[]][] = Object.keys(unsortedGroupedNgrams)
+    .map(key => {
+      let uniqueNames = distinct(unsortedGroupedNgrams[key] as NgramPerson[], x => x.person.normalizedName);
 
       uniqueNames.sort((a, b) => a.person.normalizedName.localeCompare(b.person.normalizedName));
-        return [
-          key,  // ngram 'ab'
-          uniqueNames // [ bob, sam ]
+      return [
+        key,  // ngram 'ab'
+        uniqueNames // [ bob, sam ]
       ];
     });
 

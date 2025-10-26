@@ -7,7 +7,7 @@ function testTheThing(input: { [key: string]: BreakoutRoomConfig[] }) {
   const keys = Object.keys(input);
   for (const k of keys) {
     describe(k, () => {
-      for (const data of input[k]) {
+      for (const data of input[k] as BreakoutRoomConfig[]) {
         describe(`page ${data.page}`, () => {
           it('peopleSharing <= peoplePerRoom', () => {
             expect(data.peopleSharing).lessThanOrEqual(data.peoplePerRoom);

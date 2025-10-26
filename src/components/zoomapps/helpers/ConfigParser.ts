@@ -41,7 +41,7 @@ export function parseConfig(rawConfig: string): [string | undefined, ClassConfig
     return {
       id: row[idIndex],
       finalName: row[finalNameIndex],
-      potentialNames: potName === '' ? [] : potName.split('$'),
+      potentialNames: potName === '' || !potName ? [] : potName.split('$'),
       group: row[groupIndex],
     } as ClassConfig
   })];
