@@ -29,7 +29,7 @@
     "vue-search-select": "^3.2.0"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.17.1",
+    "@cloudflare/vite-plugin": "^1.21.1",
     "@rushstack/eslint-patch": "^1.15.0",
     "@tsconfig/node24": "^24.0.3",
     "@types/jsdom": "^27.0.0",
@@ -54,6 +54,6 @@
     "vite": "^7.3.0",
     "vitest": "^4.0.16",
     "vue-tsc": "^3.2.1",
-    "wrangler": "^4.28.1"
+    "wrangler": "^4.59.3"
   }
 }
