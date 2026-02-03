@@ -17,15 +17,15 @@
   },
   "dependencies": {
     "@zoom/appssdk": "^0.16.36",
-    "@zoom/meetingsdk": "^5.0.2",
+    "@zoom/meetingsdk": "^5.1.0",
     "chart.js": "^4.5.1",
     "chartjs-chart-geo": "^4.3.6",
     "chartjs-plugin-datalabels": "^2.2.0",
     "jsrsasign": "^11.1.0",
     "luxon": "^3.7.2",
     "pinia": "^3.0.4",
-    "vue": "^3.5.26",
-    "vue-router": "^4.6.4",
+    "vue": "^3.5.27",
+    "vue-router": "^5.0.2",
     "vue-search-select": "^3.2.0"
   },
   "devDependencies": {
