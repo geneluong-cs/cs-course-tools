@@ -78,7 +78,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6
       with:
-        ref: ${{ needs.build.outputs.version }}"
+        ref: ${{ needs.build.outputs.version }}
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
