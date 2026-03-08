@@ -6,7 +6,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -35,11 +35,10 @@ jobs:
       run: echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
     - run: npm install
-    - name: npm build
+    - run: npm run build
       env:
         IS_WRANGLER: 'TRUE' 
-        VERSION_SUFFIX: ${{ steps.suffix.output.short_sha }}
-      run: IS_WRANGLER=TRUE npm run build
+        VERSION_SUFFIX: ${{ steps.suffix.outputs.short_sha }}
 
     - name: Build & Deploy Worker
       id: wrangler
