@@ -48,12 +48,12 @@ jobs:
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         command: versions upload --preview-alias ${{ steps.normalize.outputs.alias }}
 
-    - name: Comment preview URL on PR creation
-      if: github.event_name == 'pull_request' && github.event.action == 'opened'
+    - name: Comment preview URL
+      if: github.event_name == 'pull_request'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        gh pr comment ${{ github.event.pull_request.number }} --body "
+        gh pr comment ${{ github.event.pull_request.number }} --edit-last --create-if-none --body "
         **Preview deployment ready for this PR!**  
 
         Access it here: ${{ steps.wrangler.outputs.pages-deployment-alias-url || steps.wrangler.outputs.deployment-url }}
