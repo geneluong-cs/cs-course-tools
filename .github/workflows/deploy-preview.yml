@@ -1,0 +1,38 @@
+name: Deploy Preview
+
+on:
+  pull_request:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+    - uses: actions/checkout@v6
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: 24
+        cache: npm
+    - run: npm install
+    - run: IS_WRANGLER=TRUE npm run build
+    - name: Build & Deploy Worker
+      id: wrangler
+      uses: cloudflare/wrangler-action@v3
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        command: versions upload --preview-alias --preview-alias ${{ github.event.pull_request.number && format('pr-{0}', github.event.pull_request.number) || replace(replace(github.head_ref || github.ref_name, '/', '-'), '_', '-') }}
+    - name: Comment preview URL on PR creation
+      if: github.event_name == 'pull_request' && github.event.action == 'opened'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh pr comment ${{ github.event.pull_request.number }} --body "
+        **Preview deployment ready for this PR!**  
+
+        Access it here: ${{ steps.wrangler.outputs.deployment-url }}
+        "
