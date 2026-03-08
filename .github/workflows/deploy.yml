@@ -2,24 +2,10 @@ name: Deploy vuejs app
 
 on:
   workflow_dispatch:
-    inputs:
-      bump:
-        description: "Version bump type"
-        required: true
-        default: patch
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.bump.outputs.version }}
-    permissions:
-      contents: write
     steps:
     - uses: actions/checkout@v6
     - name: Setup Node.js
@@ -28,35 +14,11 @@ jobs:
         node-version: 24
         cache: npm
     - run: npm install
-    - name: Configure git
-      run: |
-        git config user.name "github-actions"
-        git config user.email "github-actions@github.com"
-    - name: Bump version
-      id: bump
-      run: |
-        VERSION=$(npm version ${{ github.event.inputs.bump }} -m "release: %s")
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
     - run: npm run build
     - name: Upload static files as artifact
       uses: actions/upload-pages-artifact@v4
       with:
         path: dist/
-    - name: Push changes
-      run: git push --follow-tags
-    - name: Create GitHub Release
-      uses: actions/github-script@v8
-      with:
-        script: |
-          const tag = "${{ steps.bump.outputs.version }}"
-
-          await github.rest.repos.createRelease({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            tag_name: tag,
-            name: tag,
-            generate_release_notes: true
-          })
 
   deploy-github-pages:
     needs: build
@@ -77,17 +39,59 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
-      with:
-        ref: ${{ needs.build.outputs.version }}
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
         node-version: 24
         cache: npm
     - run: npm install
-    - run: IS_WRANGLER=TRUE npm run build
-    - name: Build & Deploy Worker
+    - run: npm run build
+      env:
+        IS_WRANGLER: 'TRUE' 
+    - name: Deploy Worker
       uses: cloudflare/wrangler-action@v3
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+  release:
+    needs:
+      - deploy-github-pages
+      - deploy-cloudflare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v6
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: 24
+
+    - name: Get current version
+      id: npm_version
+      run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "npm_version=$VERSION" >> $GITHUB_OUTPUT
+    - name: Create GitHub Release
+      uses: actions/github-script@v8
+      with:
+        script: |
+          const tag = "v${{ steps.npm_version.outputs.npm_version }}"
+          await github.rest.repos.createRelease({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            target_commitish: ${{ github.sha }},
+            tag_name: tag,
+            name: tag,
+            generate_release_notes: true
+          })
+
+    - name: Configure git
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+    - name: Bump version
+      run: npm version patch --no-git-tag-version -m "bumped: %s"
+    - name: Push changes
+      run: git push --follow-tags
