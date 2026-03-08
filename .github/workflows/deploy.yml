@@ -1,9 +1,16 @@
 name: Deploy vuejs app
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
+    bump:
+      description: "Version bump type"
+      required: true
+      default: patch
+      type: choice
+      options:
+        - patch
+        - minor
+        - major
 
 jobs:
   build:
@@ -52,4 +59,42 @@ jobs:
       uses: cloudflare/wrangler-action@v3
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+  bump-version:
+    permissions:
+      contents: write
+    needs:
+    - deploy-github-pages
+    - deploy-cloudflare
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: 24
+        cache: npm
+    - name: Configure git
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+    - name: Bump version
+        id: bump
+        run: |
+          VERSION=$(npm version ${{ github.event.inputs.bump }} -m "release: %s")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+    - name: Push changes
+      run: git push --follow-tags
+    - name: Create GitHub Release
+      uses: actions/github-script@v8
+      with:
+        script: |
+          const tag = "${{ steps.bump.outputs.version }}"
+
+          await github.rest.repos.createRelease({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            tag_name: tag,
+            name: tag,
+            generate_release_notes: true
+          })
