@@ -5,6 +5,10 @@ import vue from '@vitejs/plugin-vue'
 
 import { cloudflare } from "@cloudflare/vite-plugin"
 
+const pkgVersion = process.env.npm_package_version || '0.0.0';
+const suffix = process.env.VERSION_SUFFIX || '';
+const fullVersion = suffix ? `${pkgVersion}-${suffix}` : pkgVersion;
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -21,7 +25,7 @@ export default defineConfig({
     }
   },
   define: {
-    APP_VERSION: JSON.stringify(process.env.npm_package_version),
+    APP_VERSION: JSON.stringify(fullVersion),
   },
   base: process.env.NODE_ENV === 'production'
     ? process.env.IS_WRANGLER === 'TRUE' ? '/' : '/cs-course-tools'
