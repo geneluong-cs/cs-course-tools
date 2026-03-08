@@ -92,6 +92,6 @@ jobs:
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
     - name: Bump version
-      run: npm version patch --no-git-tag-version -m "bumped: %s"
+      run: 'npm version patch --no-git-tag-version -m "bumped: %s"'
     - name: Push changes
       run: git push --follow-tags
