@@ -38,7 +38,7 @@ jobs:
     - name: npm build
       env:
         IS_WRANGLER: 'TRUE' 
-        VERSION_SUFFIX: steps.suffix.output.short_sha
+        VERSION_SUFFIX: ${{ steps.suffix.output.short_sha }}
       run: IS_WRANGLER=TRUE npm run build
 
     - name: Build & Deploy Worker
