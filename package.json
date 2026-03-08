@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "VERSION_SUFFIX=dev vite",
     "build": "run-p type-check build-only",
     "preview": "npm run build && wrangler dev",
     "test:unit": "vitest",
