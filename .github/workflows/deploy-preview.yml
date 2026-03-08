@@ -57,5 +57,5 @@ jobs:
         gh pr comment ${{ github.event.pull_request.number }} --body "
         **Preview deployment ready for this PR!**  
 
-        Access it here: ${{ steps.wrangler.outputs.deployment-url }}
+        Access it here: ${{ steps.wrangler.outputs.pages-deployment-alias-url || steps.wrangler.outputs.deployment-url }}
         "
