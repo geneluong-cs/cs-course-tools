@@ -19,13 +19,25 @@ jobs:
         cache: npm
     - run: npm install
     - run: IS_WRANGLER=TRUE npm run build
+    - name: Normalize branch name for preview alias
+      id: normalize
+      run: |
+        if [ -n "${{ github.event.pull_request.number }}" ]; then
+          ALIAS="pr-${{ github.event.pull_request.number }}"
+        else
+          BRANCH="${{ github.ref_name }}"
+          ALIAS=$(echo "$BRANCH" | tr '[:upper:]' '[:lower:]' | tr '/_' '-')
+        fi
+
+        ALIAS=$(echo "$ALIAS" | cut -c1-50)
+        echo "alias=$ALIAS" >> $GITHUB_OUTPUT
     - name: Build & Deploy Worker
       id: wrangler
       uses: cloudflare/wrangler-action@v3
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        command: versions upload --preview-alias --preview-alias ${{ github.event.pull_request.number && format('pr-{0}', github.event.pull_request.number) || replace(replace(github.head_ref || github.ref_name, '/', '-'), '_', '-') }}
+        command: versions upload --preview-alias ${{ steps.normalize.outputs.alias }}
     - name: Comment preview URL on PR creation
       if: github.event_name == 'pull_request' && github.event.action == 'opened'
       env:
