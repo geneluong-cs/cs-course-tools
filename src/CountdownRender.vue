@@ -122,7 +122,7 @@ const countdownInterval = setInterval(updateCountdown, 1000);
   height: 100%;
 
   display: grid;
-  grid-template-rows: 80% 10% 10%;
+  grid-template-rows: 80fr 10fr 10fr;
 
   text-align: center;
 }
