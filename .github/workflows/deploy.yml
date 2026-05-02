@@ -74,7 +74,7 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           echo "npm_version=$VERSION" >> $GITHUB_OUTPUT
     - name: Create GitHub Release
-      uses: actions/github-script@v8
+      uses: actions/github-script@v9
       with:
         script: |
           const tag = "v${{ steps.npm_version.outputs.npm_version }}"
